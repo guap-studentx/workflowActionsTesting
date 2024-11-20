@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     // Parse command line
     // ------------------
     const char* server_ip;
-    int server_port = 0;
+    int server_port = -1;
     if (argc < 2) {
         std::cerr << "Not enought arguments" << std::endl;
         std::cout << "Usage: client <address> <port>" << std::endl;
