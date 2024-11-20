@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
     // ------------------
     const char* server_ip;
     int server_port = -1;
-    if (argc < 2) {
+    if (argc <= 2) {
         std::cerr << "Not enought arguments" << std::endl;
         std::cout << "Usage: client <address> <port>" << std::endl;
         return 1;
