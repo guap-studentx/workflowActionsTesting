@@ -33,3 +33,41 @@ jobs:
 
         # Test: Invalid port (non-integer)
         ./client 127.0.0.1 -1234.5 || test $? -eq 1
+    
+    - name: Test Client and Server Interaction
+      run: |
+      
+        # Start server in the background
+        ./server 12345 &
+        SERVER_PID=$!
+
+        # Give server time to start
+        sleep 2
+        
+        
+        # Test: Valid client-server interaction
+        EXCEPTED_OUTPUT="Conneting to (127.0.0.1:12345)...
+[+++] Connected to (127.0.0.1:12345)
+command> reg aaa
+0 
+command> reg aaa
+1 
+command> quit
+0 
+Exiting .."
+        ACTUAL_OUTPUT=$(echo -e "reg aaa\nreg aaa\nquit\n" | ./client 127.0.0.1 12345)
+        
+        # Compare outputs
+        if [ "$ACTUAL_OUTPUT" != "$EXPECTED_OUTPUT" ]; then
+          echo "Test failed: Output mismatch"
+          echo "Expected:"
+          echo "$EXPECTED_OUTPUT"
+          echo "Actual:"
+          echo "$ACTUAL_OUTPUT"
+          kill $SERVER_PID
+          exit 1
+        fi
+
+        # Kill the server after the test
+        kill $SERVER_PID
+        
