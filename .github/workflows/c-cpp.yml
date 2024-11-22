@@ -46,16 +46,24 @@ jobs:
         
         
         # Test: Valid client-server interaction
-        EXPECTED_OUTPUT="Conneting to (127.0.0.1:12345)... [+++] Connected to (127.0.0.1:12345) command> 0 command> 1 command> 0 Exiting .."
-        ACTUAL_OUTPUT=$(echo -e "reg aaa\nreg aaa\nquit\n" | ./client 127.0.0.1 12345)
         
-        # Compare outputs
-        if [ "$ACTUAL_OUTPUT" != "$EXPECTED_OUTPUT" ]; then
+        echo "Conneting to (127.0.0.1:12345)..." > EXCEPTED_OUTPUT.txt
+        echo "[+++] Connected to (127.0.0.1:12345)" >> EXCEPTED_OUTPUT.txt
+        echo "command> 0 " >> EXCEPTED_OUTPUT.txt
+        echo "command> 1 " >> EXCEPTED_OUTPUT.txt
+        echo "command> 0 " >> EXCEPTED_OUTPUT.txt
+        echo "Exiting .." >> EXCEPTED_OUTPUT.txt
+        
+        
+        echo -e "reg aaa\nreg aaa\nquit\n" | ./client 127.0.0.1 12345 > ACTUAL_OUTPUT.txt 
+        
+        # Compare files
+        if ! diff -q EXPECTED_OUTPUT.txt ACTUAL_OUTPUT.txt; then
           echo "Test failed: Output mismatch"
           echo "Expected:"
-          echo "$EXPECTED_OUTPUT"
+          cat EXPECTED_OUTPUT.txt
           echo "Actual:"
-          echo "$ACTUAL_OUTPUT"
+          cat ACTUAL_OUTPUT.txt
           kill $SERVER_PID
           exit 1
         fi

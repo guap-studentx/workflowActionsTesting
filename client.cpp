@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
 
         // Условия завершения
         if (command_prompt == "quit") {
-            printf("Exiting ..");
+            printf("Exiting ..\n");
             break;
         }
         memset(respBuf, 0, DEFAULT_BUFFER_SIZE);
