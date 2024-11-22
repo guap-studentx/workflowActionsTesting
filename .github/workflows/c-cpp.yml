@@ -46,7 +46,8 @@ jobs:
         
         
         # Test: Valid client-server interaction
-        EXPECTED_OUTPUT="Conneting to (127.0.0.1:12345)...\n[+++] Connected to (127.0.0.1:12345)\ncommand> 0 \ncommand> 1 \ncommand> 0 \nExiting .."
+        EXPECTED_OUTPUT="Conneting to (127.0.0.1:12345)... \n[+++] Connected to (127.0.0.1:12345) \ncommand> 0 \ncommand> 1 \ncommand> 0 \nExiting .."
+        
         ACTUAL_OUTPUT=$(echo -e "reg aaa\nreg aaa\nquit\n" | ./client 127.0.0.1 12345)
         
         # Compare outputs
