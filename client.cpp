@@ -25,8 +25,8 @@ int main(int argc, char* argv[]) {
     // Parse command line
     // ------------------
     const char* server_ip;
-    int server_port = -1;
-    if (argc <= 2) {
+    int server_port = 0;
+    if (argc < 2) {
         std::cerr << "Not enought arguments" << std::endl;
         std::cout << "Usage: client <address> <port>" << std::endl;
         return 1;
@@ -107,11 +107,7 @@ int main(int argc, char* argv[]) {
 
         // Получаем ответ
         bRecv = recv(net_sock, respBuf, DEFAULT_BUFFER_SIZE, 0);
-        if (bRecv == 1) {
-            std::cerr << "[ERROR] Can't RECV data from server" << std::endl;
-            perror(" > Details: ");
-            continue;
-        } else if (bRecv == 0) {
+        if (bRecv == 0) {
             std::cerr << "[ERROR] 0 bytes recieved from server" << std::endl;
             perror(" > Details: ");
             continue;
@@ -129,7 +125,7 @@ int main(int argc, char* argv[]) {
     }
 
     /* Чистки */
-
+    shutdown(net_sock, SHUT_RDWR);
     delete respBuf;
     delete reqBuf;
 
