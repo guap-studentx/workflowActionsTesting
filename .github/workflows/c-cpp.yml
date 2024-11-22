@@ -47,12 +47,12 @@ jobs:
         
         # Test: Valid client-server interaction
         
-        echo "Conneting to (127.0.0.1:12345)..." > EXCEPTED_OUTPUT.txt
-        echo "[+++] Connected to (127.0.0.1:12345)" >> EXCEPTED_OUTPUT.txt
-        echo "command> 0 " >> EXCEPTED_OUTPUT.txt
-        echo "command> 1 " >> EXCEPTED_OUTPUT.txt
-        echo "command> 0 " >> EXCEPTED_OUTPUT.txt
-        echo "Exiting .." >> EXCEPTED_OUTPUT.txt
+        echo "Conneting to (127.0.0.1:12345)..." > EXPECTED_OUTPUT.txt
+        echo "[+++] Connected to (127.0.0.1:12345)" >> EXPECTED_OUTPUT.txt
+        echo "command> 0 " >> EXPECTED_OUTPUT.txt
+        echo "command> 1 " >> EXPECTED_OUTPUT.txt
+        echo "command> 0 " >> EXPECTED_OUTPUT.txt
+        echo "Exiting .." >> EXPECTED_OUTPUT.txt
         
         
         echo -e "reg aaa\nreg aaa\nquit\n" | ./client 127.0.0.1 12345 > ACTUAL_OUTPUT.txt 
